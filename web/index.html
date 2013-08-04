@@ -2,8 +2,8 @@
 	  "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
-    <script type="text/javascript" src="js/sha512.js"></script>
-    <script type="text/javascript" src="js/base91.js"></script>	
+    <script type="text/javascript" src="include/sha512.js"></script>
+    <script type="text/javascript" src="include/base91.js"></script>	
     <script type="text/javascript">
 	function showhide()	{
 		if (document.getElementById("expert").checked) {   
@@ -41,18 +41,18 @@
 		var pass = document.getElementById("password");
 		var master = document.getElementById("master").value;
 		var token = document.getElementById("token").value;
-		var iterations = (document.getElementById("iterations").value == '') ? 1111 : document.getElementById("iterations").value;
-		var start = (document.getElementById("start").value == '') ? 1 : document.getElementById("start").value;
+		var salt = document.getElementById("salt").value;
+		var iterations = (document.getElementById("iterations").value == '') ? 1111 : document.getElementById("iterations").value *1;
+		var start = (document.getElementById("start").value == '') ? 1 : document.getElementById("start").value *1;
 		if (start > 79 || start < 1 || typeof start !== "number") {
-			document.getElementById("start").value = 'ERROR!';
 			pass.value = "Startwert sollte zwischen 1 und 79 liegen.";
 			return;
-		}	
-		var len = (document.getElementById("len").value == '') ? 79 - start : document.getElementById("len").value;
-		var end = len*1 + start*1 - 1*1;
-		if (end > 79 || len < 0 || typeof len !== "number") {
-			document.getElementById("len").value = 'ERROR!';
-			pass.value = "Laenge sollte zwischen 0 und 79 liegen und Laenge + Start sollten 79 nicht ueberschreiten.";
+		}
+		start--;	
+		var len = (document.getElementById("len").value == '') ? 79 - start : document.getElementById("len").value *1;
+		var end = len*1 + start*1;
+		if (end > 79 || len < 1 || typeof len !== "number") {
+			pass.value = "Laenge sollte zwischen 1 und 79 liegen und Laenge + Start sollten 80 nicht ueberschreiten.";
 			return;
 		}
 		var salt = document.getElementById("salt").value;
@@ -66,9 +66,7 @@
     </script>
   </head>
   <body>
-
     <div class="content">
-      
       <h1>Batagur</h1>
       <br>
 	<fieldset><legend>Batagur</legend>
@@ -78,7 +76,7 @@
 				<td><input type="password" name="master" id="master" placeholder="master" tabindex="1"/></td>
 				<td><label for="salt" class="hidden" id="saltlabel">Salt:</label></td>
 				<td><input type="text" class="hidden" name="salt" size="5" id="salt" placeholder="salt" tabindex="3"/></td>
-				<td><label for="iterations" class="hidden" id="iterationslabel">Iterations:</label></td>
+				<td><label for="iterations" class="hidden" id="iterationslabel">Iterationen:</label></td>
         <td><input type="text" class="hidden" name="iterations" size="5" id="iterations" placeholder="1111" tabindex="5"/></td>
 	    </tr>
 	    <tr>
@@ -91,10 +89,10 @@
 	    </tr>
 	    <tr>
 	      <td><input type="button" value="Generate" onClick="generate()" /></td>
-        <td><input type="checkbox" name="expert" id="expert" onClick="showhide()" />Expert</td>
+        <td><input type="checkbox" name="expert" id="expert" onClick="showhide()" />Experte</td>
 	    </tr>
 	    <tr>
-				<td><label for="password">Password:</label></td>
+				<td><label for="password">Passwort:</label></td>
 				<td colspan="5"><textarea name="password" id="password" cols="50" rows="3"  placeholder="password" readonly></textarea></td>
 			</tr>
 	  </table>
