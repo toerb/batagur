@@ -62,6 +62,7 @@
 			hash = hashtmp;
 		}
 		pass.value = base91_encode(hex2bin(hash.getHash("SHA-512","HEX"))).substring(start, end);
+		document.getElementById("master").value = '';
 	}
     </script>
   </head>
