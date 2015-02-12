@@ -2,6 +2,7 @@
 	  "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
+		<style type="text/css">.hidden {visibility:hidden;}</style>
     <script type="text/javascript" src="js/sha512.js"></script>
     <script type="text/javascript" src="js/base91.js"></script>	
     <script type="text/javascript">
@@ -62,6 +63,7 @@
 			hash = hashtmp;
 		}
 		pass.value = base91_encode(hex2bin(hash.getHash("SHA-512","HEX"))).substring(start, end);
+		document.getElementById("master").value = '';
 	}
     </script>
   </head>
