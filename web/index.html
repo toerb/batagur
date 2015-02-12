@@ -63,7 +63,9 @@
 			hash = hashtmp;
 		}
 		pass.value = base91_encode(hex2bin(hash.getHash("SHA-512","HEX"))).substring(start, end);
-		document.getElementById("master").value = '';
+		if (document.getElementById("autodelete").checked) {   
+			document.getElementById("master").value = '';
+		}
 	}
     </script>
   </head>
@@ -91,7 +93,7 @@
 	    </tr>
 	    <tr>
 	      <td><input type="button" value="Generate" onClick="generate()" /></td>
-        <td><input type="checkbox" name="expert" id="expert" onClick="showhide()" />Experte</td>
+        <td colspan="4"><input type="checkbox" name="expert" id="expert" onClick="showhide()" />Expert <input type="checkbox" name="autodelete" id="autodelete" checked />Delete Master</td>
 	    </tr>
 	    <tr>
 				<td><label for="password">Passwort:</label></td>
