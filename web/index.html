@@ -1,106 +1,94 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-	  "http://www.w3.org/TR/html4/loose.dtd">
+"http://www.w3.org/TR/html4/loose.dtd">
 <html>
-  <head>
+	<head>
 		<style type="text/css">.hidden {visibility:hidden;}</style>
-    <script type="text/javascript" src="js/sha512.js"></script>
-    <script type="text/javascript" src="js/base91.js"></script>	
-    <script type="text/javascript">
-	function showhide()	{
-		if (document.getElementById("expert").checked) {   
-			document.getElementById("saltlabel").style.visibility = "visible";
-			document.getElementById("salt").style.visibility = "visible";
-			document.getElementById("lenlabel").style.visibility = "visible";
-			document.getElementById("len").style.visibility = "visible";
-			document.getElementById("startlabel").style.visibility = "visible";
-			document.getElementById("start").style.visibility = "visible";
-			document.getElementById("iterationslabel").style.visibility = "visible";
-			document.getElementById("iterations").style.visibility = "visible";
-		} else {
-			document.getElementById("saltlabel").style.visibility = "hidden";
-			document.getElementById("salt").style.visibility = "hidden";
-			document.getElementById("salt").value = '';
-			document.getElementById("lenlabel").style.visibility = "hidden";
-			document.getElementById("len").style.visibility = "hidden";
-			document.getElementById("len").value = '';
-			document.getElementById("startlabel").style.visibility = "hidden";
-			document.getElementById("start").style.visibility = "hidden";
-			document.getElementById("start").value = '';
-			document.getElementById("iterationslabel").style.visibility = "hidden";
-			document.getElementById("iterations").style.visibility = "hidden";
-			document.getElementById("iterations").value = '';
-		}
+		<script type="text/javascript" src="js/sha512.js"></script>
+		<script type="text/javascript" src="js/base91.js"></script>	
+		<script type="text/javascript">
+function showhide()	{
+	if (document.getElementById("expert").checked) {   
+		document.getElementById("saltlabel").style.visibility = "visible";
+		document.getElementById("salt").style.visibility = "visible";
+		document.getElementById("lenlabel").style.visibility = "visible";
+		document.getElementById("len").style.visibility = "visible";
+		document.getElementById("startlabel").style.visibility = "visible";
+		document.getElementById("start").style.visibility = "visible";
+		document.getElementById("iterationslabel").style.visibility = "visible";
+		document.getElementById("iterations").style.visibility = "visible";
+	} else {
+		document.getElementById("saltlabel").style.visibility = "hidden";
+		document.getElementById("salt").style.visibility = "hidden";
+		document.getElementById("salt").value = '';
+		document.getElementById("lenlabel").style.visibility = "hidden";
+		document.getElementById("len").style.visibility = "hidden";
+		document.getElementById("len").value = '';
+		document.getElementById("startlabel").style.visibility = "hidden";
+		document.getElementById("start").style.visibility = "hidden";
+		document.getElementById("start").value = '';
+		document.getElementById("iterationslabel").style.visibility = "hidden";
+		document.getElementById("iterations").style.visibility = "hidden";
+		document.getElementById("iterations").value = '';
 	}
-	function hex2bin(hex) {
-		var bytes = [], str;
-		for(var i=0; i< hex.length-1; i+=2) {
-			bytes.push(parseInt(hex.substr(i, 2), 16));
-    }
-		return String.fromCharCode.apply(String, bytes);
+}
+function generate() {
+	var pass = document.getElementById("password");
+	var master = document.getElementById("master").value;
+	var token = document.getElementById("token").value;
+	var salt = document.getElementById("salt").value;
+	var iterations = (document.getElementById("iterations").value == '') ? 1111 : document.getElementById("iterations").value *1;
+	var start = (document.getElementById("start").value == '') ? 1 : document.getElementById("start").value *1;
+	if (start > 79 || start < 1 || typeof start !== "number") {
+		pass.value = "Startwert sollte zwischen 1 und 79 liegen.";
+		return;
 	}
-	function generate() {
-		var pass = document.getElementById("password");
-		var master = document.getElementById("master").value;
-		var token = document.getElementById("token").value;
-		var salt = document.getElementById("salt").value;
-		var iterations = (document.getElementById("iterations").value == '') ? 1111 : document.getElementById("iterations").value *1;
-		var start = (document.getElementById("start").value == '') ? 1 : document.getElementById("start").value *1;
-		if (start > 79 || start < 1 || typeof start !== "number") {
-			pass.value = "Startwert sollte zwischen 1 und 79 liegen.";
-			return;
-		}
-		start--;	
-		var len = (document.getElementById("len").value == '') ? 79 - start : document.getElementById("len").value *1;
-		var end = len*1 + start*1;
-		if (end > 79 || len < 1 || typeof len !== "number") {
-			pass.value = "Laenge sollte zwischen 1 und 79 liegen und Laenge + Start sollten 80 nicht ueberschreiten.";
-			return;
-		}
-		var salt = document.getElementById("salt").value;
-		var hash = new jsSHA(master + salt + token,"TEXT");
-		for (var i = 1; i < iterations; i++) {
-			hashtmp = new jsSHA(hash.getHash("SHA-512","HEX"),"HEX");
-			hash = hashtmp;
-		}
-		pass.value = base91_encode(hex2bin(hash.getHash("SHA-512","HEX"))).substring(start, end);
-		if (document.getElementById("autodelete").checked) {   
-			document.getElementById("master").value = '';
-		}
+	start--;
+	var len = (document.getElementById("len").value == '') ? 79 - start : document.getElementById("len").value *1;
+	var end = len*1 + start*1;
+	if (end > 79 || len < 1 || typeof len !== "number") {
+		pass.value = "Laenge sollte zwischen 1 und 79 liegen und Laenge + Start sollten 80 nicht ueberschreiten.";
+		return;
 	}
-    </script>
-  </head>
-  <body>
-    <div class="content">
-      <h1>Batagur</h1>
-      <br>
-	<fieldset><legend>Batagur</legend>
-	  <table>
-	    <tr>
-				<td><label for="master">Master:</label></td>
-				<td><input type="password" name="master" id="master" placeholder="master" tabindex="1"/></td>
-				<td><label for="salt" class="hidden" id="saltlabel">Salt:</label></td>
-				<td><input type="text" class="hidden" name="salt" size="5" id="salt" placeholder="salt" tabindex="3"/></td>
-				<td><label for="iterations" class="hidden" id="iterationslabel">Iterationen:</label></td>
-        <td><input type="text" class="hidden" name="iterations" size="5" id="iterations" placeholder="1111" tabindex="5"/></td>
-	    </tr>
-	    <tr>
-	      <td><label for="token">Token:</label></td>
-				<td><input type="password" name="token" id="token" placeholder="token" tabindex="2"/></td>
-				<td><label for="start" class="hidden" id="startlabel">Start:</label></td>
-        <td><input type="text" class="hidden" name="start" size="5" id="start" placeholder="1" tabindex="4"/></td>
-				<td><label for="len" class="hidden" id="lenlabel">L&auml;nge:</label></td>
-        <td><input type="text" class="hidden" name="len" size="5" id="len" placeholder="79" tabindex="6"/></td>
-	    </tr>
-	    <tr>
-	      <td><input type="button" value="Generate" onClick="generate()" /></td>
-        <td colspan="4"><input type="checkbox" name="expert" id="expert" onClick="showhide()" />Expert <input type="checkbox" name="autodelete" id="autodelete" checked />Delete Master</td>
-	    </tr>
-	    <tr>
-				<td><label for="password">Passwort:</label></td>
-				<td colspan="5"><textarea name="password" id="password" cols="50" rows="3"  placeholder="password" readonly></textarea></td>
-			</tr>
-	  </table>
-	</fieldset>
-    </div>
-  </body>
+	var hash = new jsSHA(master + token,"TEXT");
+	pass.value = base91_encode(hash.getHash("SHA-512","BYTES",iterations)).substring(start, end);
+	if (document.getElementById("autodelete").checked) {
+		document.getElementById("master").value = '';
+	}
+}
+		</script>
+	</head>
+	<body>
+		<div class="content">
+			<h1>Batagur</h1>
+			<br>
+			<fieldset><legend>Batagur</legend>
+				<table>
+					<tr>
+						<td><label for="master">Master:</label></td>
+						<td><input type="password" name="master" id="master" placeholder="master" tabindex="1"/></td>
+						<td><label for="salt" class="hidden" id="saltlabel">Salt:</label></td>
+						<td><input type="text" class="hidden" name="salt" size="5" id="salt" placeholder="salt" tabindex="3"/></td>
+						<td><label for="iterations" class="hidden" id="iterationslabel">Iterationen:</label></td>
+						<td><input type="text" class="hidden" name="iterations" size="5" id="iterations" placeholder="1111" tabindex="5"/></td>
+					</tr>
+					<tr>
+						<td><label for="token">Token:</label></td>
+						<td><input type="password" name="token" id="token" placeholder="token" tabindex="2"/></td>
+						<td><label for="start" class="hidden" id="startlabel">Start:</label></td>
+						<td><input type="text" class="hidden" name="start" size="5" id="start" placeholder="1" tabindex="4"/></td>
+						<td><label for="len" class="hidden" id="lenlabel">L&auml;nge:</label></td>
+						<td><input type="text" class="hidden" name="len" size="5" id="len" placeholder="79" tabindex="6"/></td>
+					</tr>
+					<tr>
+						<td><input type="button" value="Generate" onClick="generate()" /></td>
+						<td colspan="4"><input type="checkbox" name="expert" id="expert" onClick="showhide()" />Expert <input type="checkbox" name="autodelete" id="autodelete" checked />Delete Master</td>
+					</tr>
+					<tr>
+						<td><label for="password">Passwort:</label></td>
+						<td colspan="5"><textarea name="password" id="password" cols="50" rows="3"  placeholder="password" readonly></textarea></td>
+					</tr>
+				</table>
+			</fieldset>
+		</div>
+	</body>
 </html>
