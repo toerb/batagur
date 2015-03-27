@@ -45,8 +45,15 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = src/harbour-batagur.cpp 
-OBJECTS       = harbour-batagur.o
+SOURCES       = src/harbour-batagur.cpp \
+		src/batagur.cpp \
+		src/sha2.c moc_batagur-qt.cpp \
+		moc_qtsettings.cpp
+OBJECTS       = harbour-batagur.o \
+		batagur.o \
+		sha2.o \
+		moc_batagur-qt.o \
+		moc_qtsettings.o
 DIST          = /usr/share/qt5/mkspecs/features/spec_pre.prf \
 		/usr/share/qt5/mkspecs/common/shell-unix.conf \
 		/usr/share/qt5/mkspecs/common/unix.conf \
@@ -380,7 +387,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/harbour-batagur1.0.0 || mkdir -p .tmp/harbour-batagur1.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/harbour-batagur1.0.0/ && $(COPY_FILE) --parents src/harbour-batagur.cpp .tmp/harbour-batagur1.0.0/ && $(COPY_FILE) --parents translations/harbour-batagur-de.ts .tmp/harbour-batagur1.0.0/ && (cd `dirname .tmp/harbour-batagur1.0.0` && $(TAR) harbour-batagur1.0.0.tar harbour-batagur1.0.0 && $(COMPRESS) harbour-batagur1.0.0.tar) && $(MOVE) `dirname .tmp/harbour-batagur1.0.0`/harbour-batagur1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/harbour-batagur1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/harbour-batagur1.0.0/ && $(COPY_FILE) --parents src/base91.hpp src/batagur-qt.hpp src/batagur.hpp src/sha2.h src/qtsettings.hpp .tmp/harbour-batagur1.0.0/ && $(COPY_FILE) --parents src/harbour-batagur.cpp src/batagur.cpp src/sha2.c .tmp/harbour-batagur1.0.0/ && $(COPY_FILE) --parents translations/harbour-batagur-de.ts translations/harbour-batagur-en.ts .tmp/harbour-batagur1.0.0/ && (cd `dirname .tmp/harbour-batagur1.0.0` && $(TAR) harbour-batagur1.0.0.tar harbour-batagur1.0.0 && $(COMPRESS) harbour-batagur1.0.0.tar) && $(MOVE) `dirname .tmp/harbour-batagur1.0.0`/harbour-batagur1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/harbour-batagur1.0.0
 
 
 clean:compiler_clean 
@@ -403,8 +410,155 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all:
+compiler_moc_header_make_all: moc_batagur-qt.cpp moc_qtsettings.cpp
 compiler_moc_header_clean:
+	-$(DEL_FILE) moc_batagur-qt.cpp moc_qtsettings.cpp
+moc_batagur-qt.cpp: src/batagur.hpp \
+		/usr/include/qt5/QtCore/QObject \
+		/usr/include/qt5/QtCore/qobject.h \
+		/usr/include/qt5/QtCore/qobjectdefs.h \
+		/usr/include/qt5/QtCore/qnamespace.h \
+		/usr/include/qt5/QtCore/qglobal.h \
+		/usr/include/qt5/QtCore/qconfig.h \
+		/usr/include/qt5/QtCore/qfeatures.h \
+		/usr/include/qt5/QtCore/qsystemdetection.h \
+		/usr/include/qt5/QtCore/qprocessordetection.h \
+		/usr/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/include/qt5/QtCore/qglobalstatic.h \
+		/usr/include/qt5/QtCore/qatomic.h \
+		/usr/include/qt5/QtCore/qbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/include/qt5/QtCore/qgenericatomic.h \
+		/usr/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/include/qt5/QtCore/qatomic_integrity.h \
+		/usr/include/qt5/QtCore/qoldbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_vxworks.h \
+		/usr/include/qt5/QtCore/qatomic_power.h \
+		/usr/include/qt5/QtCore/qatomic_alpha.h \
+		/usr/include/qt5/QtCore/qatomic_armv7.h \
+		/usr/include/qt5/QtCore/qatomic_armv6.h \
+		/usr/include/qt5/QtCore/qatomic_armv5.h \
+		/usr/include/qt5/QtCore/qatomic_bfin.h \
+		/usr/include/qt5/QtCore/qatomic_ia64.h \
+		/usr/include/qt5/QtCore/qatomic_mips.h \
+		/usr/include/qt5/QtCore/qatomic_s390.h \
+		/usr/include/qt5/QtCore/qatomic_sh4a.h \
+		/usr/include/qt5/QtCore/qatomic_sparc.h \
+		/usr/include/qt5/QtCore/qatomic_x86.h \
+		/usr/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/include/qt5/QtCore/qatomic_gcc.h \
+		/usr/include/qt5/QtCore/qatomic_unix.h \
+		/usr/include/qt5/QtCore/qmutex.h \
+		/usr/include/qt5/QtCore/qlogging.h \
+		/usr/include/qt5/QtCore/qflags.h \
+		/usr/include/qt5/QtCore/qtypeinfo.h \
+		/usr/include/qt5/QtCore/qtypetraits.h \
+		/usr/include/qt5/QtCore/qsysinfo.h \
+		/usr/include/qt5/QtCore/qnumeric.h \
+		/usr/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/include/qt5/QtCore/qstring.h \
+		/usr/include/qt5/QtCore/qchar.h \
+		/usr/include/qt5/QtCore/qbytearray.h \
+		/usr/include/qt5/QtCore/qrefcount.h \
+		/usr/include/qt5/QtCore/qarraydata.h \
+		/usr/include/qt5/QtCore/qstringbuilder.h \
+		/usr/include/qt5/QtCore/qlist.h \
+		/usr/include/qt5/QtCore/qalgorithms.h \
+		/usr/include/qt5/QtCore/qiterator.h \
+		/usr/include/qt5/QtCore/qcoreevent.h \
+		/usr/include/qt5/QtCore/qscopedpointer.h \
+		/usr/include/qt5/QtCore/qmetatype.h \
+		/usr/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/include/qt5/QtCore/qisenum.h \
+		/usr/include/qt5/QtCore/qobject_impl.h \
+		/usr/include/qt5/QtCore/QString \
+		src/batagur-qt.hpp
+	/usr/lib/qt5/bin/moc $(DEFINES) $(INCPATH) -I/opt/cross/armv7hl-meego-linux-gnueabi/include/c++/4.6.4 -I/opt/cross/armv7hl-meego-linux-gnueabi/include/c++/4.6.4/armv7hl-meego-linux-gnueabi -I/opt/cross/armv7hl-meego-linux-gnueabi/include/c++/4.6.4/backward -I/opt/cross/lib/gcc/armv7hl-meego-linux-gnueabi/4.6.4/include -I//usr/local/include -I/opt/cross/lib/gcc/armv7hl-meego-linux-gnueabi/4.6.4/include-fixed -I/opt/cross/armv7hl-meego-linux-gnueabi/include -I//usr/include src/batagur-qt.hpp -o moc_batagur-qt.cpp
+
+moc_qtsettings.cpp: /usr/include/qt5/QtCore/QObject \
+		/usr/include/qt5/QtCore/qobject.h \
+		/usr/include/qt5/QtCore/qobjectdefs.h \
+		/usr/include/qt5/QtCore/qnamespace.h \
+		/usr/include/qt5/QtCore/qglobal.h \
+		/usr/include/qt5/QtCore/qconfig.h \
+		/usr/include/qt5/QtCore/qfeatures.h \
+		/usr/include/qt5/QtCore/qsystemdetection.h \
+		/usr/include/qt5/QtCore/qprocessordetection.h \
+		/usr/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/include/qt5/QtCore/qglobalstatic.h \
+		/usr/include/qt5/QtCore/qatomic.h \
+		/usr/include/qt5/QtCore/qbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/include/qt5/QtCore/qgenericatomic.h \
+		/usr/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/include/qt5/QtCore/qatomic_integrity.h \
+		/usr/include/qt5/QtCore/qoldbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_vxworks.h \
+		/usr/include/qt5/QtCore/qatomic_power.h \
+		/usr/include/qt5/QtCore/qatomic_alpha.h \
+		/usr/include/qt5/QtCore/qatomic_armv7.h \
+		/usr/include/qt5/QtCore/qatomic_armv6.h \
+		/usr/include/qt5/QtCore/qatomic_armv5.h \
+		/usr/include/qt5/QtCore/qatomic_bfin.h \
+		/usr/include/qt5/QtCore/qatomic_ia64.h \
+		/usr/include/qt5/QtCore/qatomic_mips.h \
+		/usr/include/qt5/QtCore/qatomic_s390.h \
+		/usr/include/qt5/QtCore/qatomic_sh4a.h \
+		/usr/include/qt5/QtCore/qatomic_sparc.h \
+		/usr/include/qt5/QtCore/qatomic_x86.h \
+		/usr/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/include/qt5/QtCore/qatomic_gcc.h \
+		/usr/include/qt5/QtCore/qatomic_unix.h \
+		/usr/include/qt5/QtCore/qmutex.h \
+		/usr/include/qt5/QtCore/qlogging.h \
+		/usr/include/qt5/QtCore/qflags.h \
+		/usr/include/qt5/QtCore/qtypeinfo.h \
+		/usr/include/qt5/QtCore/qtypetraits.h \
+		/usr/include/qt5/QtCore/qsysinfo.h \
+		/usr/include/qt5/QtCore/qnumeric.h \
+		/usr/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/include/qt5/QtCore/qstring.h \
+		/usr/include/qt5/QtCore/qchar.h \
+		/usr/include/qt5/QtCore/qbytearray.h \
+		/usr/include/qt5/QtCore/qrefcount.h \
+		/usr/include/qt5/QtCore/qarraydata.h \
+		/usr/include/qt5/QtCore/qstringbuilder.h \
+		/usr/include/qt5/QtCore/qlist.h \
+		/usr/include/qt5/QtCore/qalgorithms.h \
+		/usr/include/qt5/QtCore/qiterator.h \
+		/usr/include/qt5/QtCore/qcoreevent.h \
+		/usr/include/qt5/QtCore/qscopedpointer.h \
+		/usr/include/qt5/QtCore/qmetatype.h \
+		/usr/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/include/qt5/QtCore/qisenum.h \
+		/usr/include/qt5/QtCore/qobject_impl.h \
+		/usr/include/qt5/QtCore/QSettings \
+		/usr/include/qt5/QtCore/qsettings.h \
+		/usr/include/qt5/QtCore/qvariant.h \
+		/usr/include/qt5/QtCore/qmap.h \
+		/usr/include/qt5/QtCore/qpair.h \
+		/usr/include/qt5/QtCore/qdebug.h \
+		/usr/include/qt5/QtCore/qhash.h \
+		/usr/include/qt5/QtCore/qtextstream.h \
+		/usr/include/qt5/QtCore/qiodevice.h \
+		/usr/include/qt5/QtCore/qlocale.h \
+		/usr/include/qt5/QtCore/qshareddata.h \
+		/usr/include/qt5/QtCore/qvector.h \
+		/usr/include/qt5/QtCore/qpoint.h \
+		/usr/include/qt5/QtCore/qset.h \
+		/usr/include/qt5/QtCore/qcontiguouscache.h \
+		/usr/include/qt5/QtCore/qstringlist.h \
+		/usr/include/qt5/QtCore/qdatastream.h \
+		/usr/include/qt5/QtCore/qregexp.h \
+		/usr/include/qt5/QtCore/qstringmatcher.h \
+		/usr/include/qt5/QtCore/QCoreApplication \
+		/usr/include/qt5/QtCore/qcoreapplication.h \
+		/usr/include/qt5/QtCore/qeventloop.h \
+		src/qtsettings.hpp
+	/usr/lib/qt5/bin/moc $(DEFINES) $(INCPATH) -I/opt/cross/armv7hl-meego-linux-gnueabi/include/c++/4.6.4 -I/opt/cross/armv7hl-meego-linux-gnueabi/include/c++/4.6.4/armv7hl-meego-linux-gnueabi -I/opt/cross/armv7hl-meego-linux-gnueabi/include/c++/4.6.4/backward -I/opt/cross/lib/gcc/armv7hl-meego-linux-gnueabi/4.6.4/include -I//usr/local/include -I/opt/cross/lib/gcc/armv7hl-meego-linux-gnueabi/4.6.4/include-fixed -I/opt/cross/armv7hl-meego-linux-gnueabi/include -I//usr/include src/qtsettings.hpp -o moc_qtsettings.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
 compiler_yacc_decl_make_all:
@@ -413,7 +567,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: 
+compiler_clean: compiler_moc_header_clean 
 
 ####### Compile
 
@@ -824,24 +978,48 @@ harbour-batagur.o: src/harbour-batagur.cpp /usr/include/qt5/QtQuick/QtQuick \
 		/usr/include/qt5/QtQuick/qsgtextureprovider.h \
 		/usr/include/qt5/QtQuick/qsgvertexcolormaterial.h \
 		/usr/include/qt5/QtQuick/qtquickversion.h \
+		src/batagur-qt.hpp \
+		src/batagur.hpp \
+		src/qtsettings.hpp \
+		/usr/include/qt5/QtCore/QSettings \
+		/usr/include/qt5/QtCore/QCoreApplication \
+		/usr/include/qt5/QtGui/QGuiApplication \
+		/usr/include/qt5/QtQuick/QQuickView \
+		/usr/include/qt5/QtQml/QQmlContext \
 		/usr/include/sailfishapp/sailfishapp.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o harbour-batagur.o src/harbour-batagur.cpp
+
+batagur.o: src/batagur.cpp src/batagur.hpp \
+		src/sha2.h \
+		src/base91.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o batagur.o src/batagur.cpp
+
+sha2.o: src/sha2.c src/sha2.h
+	$(CC) -c $(CFLAGS) $(INCPATH) -o sha2.o src/sha2.c
+
+moc_batagur-qt.o: moc_batagur-qt.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_batagur-qt.o moc_batagur-qt.cpp
+
+moc_qtsettings.o: moc_qtsettings.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qtsettings.o moc_qtsettings.cpp
 
 ####### Install
 
 install_qm: first FORCE
 	@test -d $(INSTALL_ROOT)/usr/share/harbour-batagur/translations || mkdir -p $(INSTALL_ROOT)/usr/share/harbour-batagur/translations
-	lupdate "/home/mersdk/share/SailfishOS/workspace/harbour-batagur/src" "/home/mersdk/share/SailfishOS/workspace/harbour-batagur/qml" -ts "/home/mersdk/share/SailfishOS/workspace/harbour-batagur/translations/harbour-batagur.ts" "/home/mersdk/share/SailfishOS/workspace/harbour-batagur/translations/harbour-batagur-de.ts" && mkdir -p translations && [ "/home/mersdk/share/SailfishOS/workspace/harbour-batagur" != "/home/mersdk/share/SailfishOS/workspace/harbour-batagur" -a 1 -eq 1 ] && cp -af "/home/mersdk/share/SailfishOS/workspace/harbour-batagur/translations/harbour-batagur-de.ts" "/home/mersdk/share/SailfishOS/workspace/harbour-batagur/translations" || : ; [ 1 -eq 1 ] && lrelease -nounfinished "/home/mersdk/share/SailfishOS/workspace/harbour-batagur/translations/harbour-batagur-de.ts" || :
-	-$(INSTALL_FILE) /home/mersdk/share/SailfishOS/workspace/harbour-batagur/translations/harbour-batagur-de.qm $(INSTALL_ROOT)/usr/share/harbour-batagur/translations/
+	lupdate "/home/mersdk/share/projects/batagur/harbour-batagur/src" "/home/mersdk/share/projects/batagur/harbour-batagur/qml" -ts "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-de.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-en.ts" && mkdir -p translations && [ "/home/mersdk/share/projects/batagur/harbour-batagur" != "/home/mersdk/share/projects/batagur/harbour-batagur" -a 1 -eq 1 ] && cp -af "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-de.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-en.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations" || : ; [ 1 -eq 1 ] && lrelease -nounfinished "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-de.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-en.ts" || :
+	-$(INSTALL_FILE) /home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-de.qm $(INSTALL_ROOT)/usr/share/harbour-batagur/translations/
+	-$(INSTALL_FILE) /home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-en.qm $(INSTALL_ROOT)/usr/share/harbour-batagur/translations/
 
 uninstall_qm: FORCE
+	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/share/harbour-batagur/translations/harbour-batagur-en.qm
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/share/harbour-batagur/translations/harbour-batagur-de.qm
 	-$(DEL_DIR) $(INSTALL_ROOT)/usr/share/harbour-batagur/translations/ 
 
 
 install_qml: first FORCE
 	@test -d $(INSTALL_ROOT)/usr/share/harbour-batagur || mkdir -p $(INSTALL_ROOT)/usr/share/harbour-batagur
-	-$(INSTALL_DIR) /home/mersdk/share/SailfishOS/workspace/harbour-batagur/qml $(INSTALL_ROOT)/usr/share/harbour-batagur/
+	-$(INSTALL_DIR) /home/mersdk/share/projects/batagur/harbour-batagur/qml $(INSTALL_ROOT)/usr/share/harbour-batagur/
 
 uninstall_qml: FORCE
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/share/harbour-batagur/qml
@@ -860,7 +1038,7 @@ uninstall_target: FORCE
 
 install_desktop: first FORCE
 	@test -d $(INSTALL_ROOT)/usr/share/applications || mkdir -p $(INSTALL_ROOT)/usr/share/applications
-	-$(INSTALL_FILE) /home/mersdk/share/SailfishOS/workspace/harbour-batagur/harbour-batagur.desktop $(INSTALL_ROOT)/usr/share/applications/
+	-$(INSTALL_FILE) /home/mersdk/share/projects/batagur/harbour-batagur/harbour-batagur.desktop $(INSTALL_ROOT)/usr/share/applications/
 
 uninstall_desktop: FORCE
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/share/applications/harbour-batagur.desktop
@@ -869,7 +1047,7 @@ uninstall_desktop: FORCE
 
 install_icon: first FORCE
 	@test -d $(INSTALL_ROOT)/usr/share/icons/hicolor/86x86/apps || mkdir -p $(INSTALL_ROOT)/usr/share/icons/hicolor/86x86/apps
-	-$(INSTALL_FILE) /home/mersdk/share/SailfishOS/workspace/harbour-batagur/harbour-batagur.png $(INSTALL_ROOT)/usr/share/icons/hicolor/86x86/apps/
+	-$(INSTALL_FILE) /home/mersdk/share/projects/batagur/harbour-batagur/harbour-batagur.png $(INSTALL_ROOT)/usr/share/icons/hicolor/86x86/apps/
 
 uninstall_icon: FORCE
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/share/icons/hicolor/86x86/apps/harbour-batagur.png
