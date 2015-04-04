@@ -40,7 +40,8 @@ CONFIG += sailfishapp_i18n
 # following TRANSLATIONS line. And also do not forget to
 # modify the localized app name in the the .desktop file.
 TRANSLATIONS += translations/harbour-batagur-de.ts
-TRANSLATIONS += translations/harbour-batagur-en.ts
+TRANSLATIONS += translations/harbour-batagur-zh_CN.ts
+TRANSLATIONS += translations/harbour-batagur.ts
 
 HEADERS += \
     src/base91.hpp \

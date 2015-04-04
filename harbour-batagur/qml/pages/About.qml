@@ -41,7 +41,7 @@ Page {
                 }
             }
             Label {
-                text: "Version 0.9"
+                text: "Version 0.9.1"
                 font.pixelSize: Theme.fontSizeSmall
                 anchors {
                     horizontalCenter: parent.horizontalCenter
@@ -55,7 +55,7 @@ Page {
                 }
             }
             Label {
-                text: "Issues and Source: <a href=\"https://github.com/toerb/batagur\">GitHub</a>"
+                text: qsTr("Issues") + ": <a href=\"https://github.com/toerb/batagur\">GitHub</a>"
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
                 onLinkActivated: Qt.openUrlExternally(link)

@@ -8,14 +8,6 @@
         <translation>关于</translation>
     </message>
     <message>
-        <source>Author</source>
-        <translation type="vanished">作者</translation>
-    </message>
-    <message>
-        <source>AuthorText</source>
-        <translation type="vanished">toerb (https://github.com/toerb/batagur/)</translation>
-    </message>
-    <message>
         <source>Passwords</source>
         <translation>密码</translation>
     </message>
@@ -31,6 +23,10 @@
         <source>LicencesText</source>
         <translation>许可协议文本</translation>
     </message>
+    <message>
+        <source>Issues</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Input</name>
@@ -41,6 +37,26 @@
     <message>
         <source>Settings</source>
         <translation>设置</translation>
+    </message>
+    <message>
+        <source>generate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>master password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>master</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>service token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>token</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

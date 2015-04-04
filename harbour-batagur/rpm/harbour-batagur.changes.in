@@ -8,6 +8,8 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
-* Thu Mar 26 2015 Tobias Groß <batagur@toerb.de> 0.0.1-1
+* Thu Mar 26 2015 Tobias Groß <batagur@toerb.de> 0.9.0-1
  - First release
 
+* Sat Apr 04 2015 Tobias Groß <batagur@toerb.de> 0.9.1-1
+ - added chinese translation

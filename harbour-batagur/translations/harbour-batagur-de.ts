@@ -8,14 +8,6 @@
         <translation>Über Batagur</translation>
     </message>
     <message>
-        <source>Author</source>
-        <translation type="vanished">Autor</translation>
-    </message>
-    <message>
-        <source>AuthorText</source>
-        <translation type="vanished">&lt;p&gt;toerb (&lt;a href=&quot;https://github.com/toerb/batagur/&quot;&gt;https://github.com/toerb/batagur/&lt;/a&gt;)&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Passwords</source>
         <translation>Passwörter</translation>
     </message>
@@ -38,13 +30,13 @@ Webseite: &lt;a href=&quot;http://www.ouah.org/ogay/sha2/&quot;&gt;http://www.ou
 Webseite: &lt;a href=&quot;https://github.com/r-lyeh/base91&quot;&gt;https://github.com/r-lyeh/base91&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Der durch mich entstandene Code in dieser Applikation steht unter der MIT-Lizenz.&lt;/p&gt;</translation>
     </message>
+    <message>
+        <source>Issues</source>
+        <translation>Issues und Quelltext</translation>
+    </message>
 </context>
 <context>
     <name>Input</name>
-    <message>
-        <source>Show Page 2</source>
-        <translation type="obsolete">Zur Seite 2</translation>
-    </message>
     <message>
         <source>About</source>
         <translation>Über Batagur</translation>
@@ -52,6 +44,26 @@ Webseite: &lt;a href=&quot;https://github.com/r-lyeh/base91&quot;&gt;https://git
     <message>
         <source>Settings</source>
         <translation>Einstellungen</translation>
+    </message>
+    <message>
+        <source>generate</source>
+        <translation>Generieren</translation>
+    </message>
+    <message>
+        <source>master password</source>
+        <translation>Master Passwort</translation>
+    </message>
+    <message>
+        <source>master</source>
+        <translation>Master</translation>
+    </message>
+    <message>
+        <source>service token</source>
+        <translation>Service Token</translation>
+    </message>
+    <message>
+        <source>token</source>
+        <translation>Token</translation>
     </message>
 </context>
 <context>

@@ -387,7 +387,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/harbour-batagur1.0.0 || mkdir -p .tmp/harbour-batagur1.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/harbour-batagur1.0.0/ && $(COPY_FILE) --parents src/base91.hpp src/batagur-qt.hpp src/batagur.hpp src/sha2.h src/qtsettings.hpp .tmp/harbour-batagur1.0.0/ && $(COPY_FILE) --parents src/harbour-batagur.cpp src/batagur.cpp src/sha2.c .tmp/harbour-batagur1.0.0/ && $(COPY_FILE) --parents translations/harbour-batagur-de.ts translations/harbour-batagur-en.ts .tmp/harbour-batagur1.0.0/ && (cd `dirname .tmp/harbour-batagur1.0.0` && $(TAR) harbour-batagur1.0.0.tar harbour-batagur1.0.0 && $(COMPRESS) harbour-batagur1.0.0.tar) && $(MOVE) `dirname .tmp/harbour-batagur1.0.0`/harbour-batagur1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/harbour-batagur1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/harbour-batagur1.0.0/ && $(COPY_FILE) --parents src/base91.hpp src/batagur-qt.hpp src/batagur.hpp src/sha2.h src/qtsettings.hpp .tmp/harbour-batagur1.0.0/ && $(COPY_FILE) --parents src/harbour-batagur.cpp src/batagur.cpp src/sha2.c .tmp/harbour-batagur1.0.0/ && $(COPY_FILE) --parents translations/harbour-batagur-de.ts translations/harbour-batagur-zh_CN.ts translations/harbour-batagur.ts .tmp/harbour-batagur1.0.0/ && (cd `dirname .tmp/harbour-batagur1.0.0` && $(TAR) harbour-batagur1.0.0.tar harbour-batagur1.0.0 && $(COMPRESS) harbour-batagur1.0.0.tar) && $(MOVE) `dirname .tmp/harbour-batagur1.0.0`/harbour-batagur1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/harbour-batagur1.0.0
 
 
 clean:compiler_clean 
@@ -1007,12 +1007,14 @@ moc_qtsettings.o: moc_qtsettings.cpp
 
 install_qm: first FORCE
 	@test -d $(INSTALL_ROOT)/usr/share/harbour-batagur/translations || mkdir -p $(INSTALL_ROOT)/usr/share/harbour-batagur/translations
-	lupdate "/home/mersdk/share/projects/batagur/harbour-batagur/src" "/home/mersdk/share/projects/batagur/harbour-batagur/qml" -ts "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-de.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-en.ts" && mkdir -p translations && [ "/home/mersdk/share/projects/batagur/harbour-batagur" != "/home/mersdk/share/projects/batagur/harbour-batagur" -a 1 -eq 1 ] && cp -af "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-de.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-en.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations" || : ; [ 1 -eq 1 ] && lrelease -nounfinished "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-de.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-en.ts" || :
+	lupdate "/home/mersdk/share/projects/batagur/harbour-batagur/src" "/home/mersdk/share/projects/batagur/harbour-batagur/qml" -ts "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-de.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-zh_CN.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur.ts" && mkdir -p translations && [ "/home/mersdk/share/projects/batagur/harbour-batagur" != "/home/mersdk/share/projects/batagur/harbour-batagur" -a 1 -eq 1 ] && cp -af "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-de.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-zh_CN.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations" || : ; [ 1 -eq 1 ] && lrelease -nounfinished "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-de.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-zh_CN.ts" "/home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur.ts" || :
 	-$(INSTALL_FILE) /home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-de.qm $(INSTALL_ROOT)/usr/share/harbour-batagur/translations/
-	-$(INSTALL_FILE) /home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-en.qm $(INSTALL_ROOT)/usr/share/harbour-batagur/translations/
+	-$(INSTALL_FILE) /home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur-zh_CN.qm $(INSTALL_ROOT)/usr/share/harbour-batagur/translations/
+	-$(INSTALL_FILE) /home/mersdk/share/projects/batagur/harbour-batagur/translations/harbour-batagur.qm $(INSTALL_ROOT)/usr/share/harbour-batagur/translations/
 
 uninstall_qm: FORCE
-	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/share/harbour-batagur/translations/harbour-batagur-en.qm
+	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/share/harbour-batagur/translations/harbour-batagur.qm
+	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/share/harbour-batagur/translations/harbour-batagur-zh_CN.qm
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/usr/share/harbour-batagur/translations/harbour-batagur-de.qm
 	-$(DEL_DIR) $(INSTALL_ROOT)/usr/share/harbour-batagur/translations/ 
 

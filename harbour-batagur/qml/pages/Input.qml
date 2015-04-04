@@ -54,8 +54,8 @@ Page {
 
             TextField {
                 id: master
-                placeholderText: "Master password"
-                label: "master"
+                placeholderText: qsTr("master password")
+                label: qsTr("master")
                 width: page.width
                 inputMethodHints: Qt.ImhNoPredictiveText
                 echoMode: TextInput.Password
@@ -65,8 +65,8 @@ Page {
 
             TextField {
                 id: token
-                placeholderText: "Service token"
-                label: "token"
+                placeholderText: qsTr("service token")
+                label: qsTr("token")
                 width: page.width
                 inputMethodHints: Qt.ImhNoPredictiveText
                 echoMode: TextInput.Password
@@ -87,7 +87,7 @@ Page {
             }
 
             Button {
-                text: "Generate"
+                text: qsTr("generate")
                 onClicked: {
                     var pass = BatagurQtHelper.batagur(
                                 master.text,
