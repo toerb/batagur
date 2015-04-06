@@ -14,7 +14,7 @@
     <message>
         <source>PasswordsText</source>
         <translation>&lt;p&gt;通过数学的单向函数，只需一个&quot;主密码&quot;就能生成无限多个新密码。你需要记住这个主密码。&lt;/p&gt;
-&lt;p&gt;为了生成不同的密码，需要进一步提供一些变量给单向函数：标记。&lt;/p&gt;
+&lt;p&gt;为了生成不同的密码，需要进一步提供一个变量给单向函数：标记。&lt;/p&gt;
 &lt;p&gt;标记不需要保密。你应该从你将使用密码的服务那里获取标记。例如，如果你想给你的Jolla账号生成密码，你可以使用&quot;jolla&quot;作为密码。&lt;/p&gt;
 &lt;p&gt;想再次获得生成的密码，你只需使用相同的主密码和标记再生成一次即可——生成的密码是一样的。因此，不需要将密码记录到磁盘中。&lt;/p&gt;</translation>
     </message>
