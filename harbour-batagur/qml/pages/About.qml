@@ -41,7 +41,7 @@ Page {
                 }
             }
             Label {
-                text: "Version 0.9.1"
+                text: "Version 0.9.2"
                 font.pixelSize: Theme.fontSizeSmall
                 anchors {
                     horizontalCenter: parent.horizontalCenter
