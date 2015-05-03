@@ -22,6 +22,7 @@ import Sailfish.Silica 1.0
 
 Page {
     id: page
+    allowedOrientations: Orientation.All
     property alias passwd: password.text
 
     CoverActionList {
@@ -48,12 +49,12 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr("Copy to Clipboard")
-                onClicked: Clipboard.text = password.text
-            }
-            MenuItem {
                 text: qsTr("Clear Clipboard")
                 onClicked: Clipboard.text = ""
+            }
+            MenuItem {
+                text: qsTr("Copy to Clipboard")
+                onClicked: Clipboard.text = password.text
             }
 
         }

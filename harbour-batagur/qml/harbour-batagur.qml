@@ -25,6 +25,7 @@ ApplicationWindow
 {
     initialPage: Component { Input { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
+    allowedOrientations: Orientation.All
 }
 
 

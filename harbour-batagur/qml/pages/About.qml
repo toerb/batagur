@@ -22,9 +22,10 @@ import Sailfish.Silica 1.0
 
 Page {
     id: page
+    allowedOrientations: Orientation.All
 
     SilicaFlickable {
-        anchors.fill: parent
+        anchors.fill: page
         contentHeight: column.height
 
         Column {
@@ -36,74 +37,65 @@ Page {
             }
             Image {
                 source: "/usr/share/icons/hicolor/86x86/apps/harbour-batagur.png"
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                }
+                anchors.horizontalCenter: parent.horizontalCenter
             }
             Label {
-                text: "Version 0.9.2"
+                text: "Version 0.9.3"
                 font.pixelSize: Theme.fontSizeSmall
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                }
+                anchors.horizontalCenter: parent.horizontalCenter
             }
             Label {
                 text: "© toerb (batagur@toerb.de)"
                 font.pixelSize: Theme.fontSizeSmall
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                }
+                anchors.horizontalCenter: parent.horizontalCenter
             }
             Label {
                 text: qsTr("Issues") + ": <a href=\"https://github.com/toerb/batagur\">GitHub</a>"
-                wrapMode: Text.WordWrap
-                textFormat: Text.RichText
+                wrapMode: Text.Wrap
+                textFormat: Text.StyledText
+                linkColor: Theme.highlightColor
                 onLinkActivated: Qt.openUrlExternally(link)
                 font.pixelSize: Theme.fontSizeSmall
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                }
+                anchors.horizontalCenter: parent.horizontalCenter
             }
             Label {
                 font.family: Theme.fontFamilyHeading
                 color: Theme.highlightColor
                 text: qsTr("Passwords")
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                }
+                anchors.horizontalCenter: parent.horizontalCenter
             }
-            Label {
+            Text {
                 anchors {
                     left: parent.left
                     right: parent.right
                     margins: Theme.paddingLarge
                 }
                 font.pixelSize: Theme.fontSizeSmall
-                width: page.width
-                textFormat: Text.RichText
+                color: Theme.primaryColor
+                textFormat: Text.StyledText
+                linkColor: Theme.highlightColor
                 onLinkActivated: Qt.openUrlExternally(link)
-                wrapMode: Text.WordWrap
+                wrapMode: Text.Wrap
                 text: qsTr("PasswordsText")
             }
             Label {
                 font.family: Theme.fontFamilyHeading
                 color: Theme.highlightColor
                 text: qsTr("Licences")
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                }
+                anchors.horizontalCenter: parent.horizontalCenter
             }
-            Label {
+            Text {
                 anchors {
                     left: parent.left
                     right: parent.right
                     margins: Theme.paddingLarge
                 }
                 font.pixelSize: Theme.fontSizeSmall
-                width: page.width
-                textFormat: Text.RichText
+                color: Theme.primaryColor
+                textFormat: Text.StyledText
+                linkColor: Theme.highlightColor
                 onLinkActivated: Qt.openUrlExternally(link)
-                wrapMode: Text.WordWrap
+                wrapMode: Text.Wrap
                 text: qsTr("LicencesText")
             }
         }

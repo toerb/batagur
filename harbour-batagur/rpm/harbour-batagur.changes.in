@@ -16,3 +16,7 @@
 
 * Mon Apr 06 2015 Tobias Groß <batagur@toerb.de> 0.9.2-1
  - added more chinese translation
+
+* Sun May 03 2015 Tobias Groß <batagur@toerb.de> 0.9.3-1
+ - added landscape view
+ - URLs now better readable
