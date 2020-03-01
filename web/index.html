@@ -49,7 +49,7 @@ function generate() {
 		pass.value = "Laenge sollte zwischen 1 und 79 liegen und Laenge + Start sollten 80 nicht ueberschreiten.";
 		return;
 	}
-	var hash = new jsSHA(master + token,"TEXT");
+	var hash = new jsSHA(master + salt + token,"TEXT");
 	pass.value = base91_encode(hash.getHash("SHA-512","BYTES",iterations)).substring(start, end);
 	if (document.getElementById("autodelete").checked) {
 		document.getElementById("master").value = '';
